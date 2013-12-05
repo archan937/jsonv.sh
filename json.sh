@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+#
+# JSON.sh - https://github.com/dominictarr/JSON.sh
+#
+# Created by Dominic Tarr
+#
 
 throw () {
   echo "$*" >&2
@@ -101,7 +106,7 @@ parse_array () {
       do
         parse_value "$1" "$index"
         index=$((index+1))
-        ary="$ary""$value" 
+        ary="$ary""$value"
         read -r token
         case "$token" in
           ']') break ;;
@@ -136,7 +141,7 @@ parse_object () {
         esac
         read -r token
         parse_value "$1" "$key"
-        obj="$obj$key:$value"        
+        obj="$obj$key:$value"
         read -r token
         case "$token" in
           '}') break ;;

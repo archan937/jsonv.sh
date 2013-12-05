@@ -1,10 +1,42 @@
 #!/usr/bin/env bash
-
-# Example:
-# $ cat example.json | ./jsonv name,age
-# $ cat example.json | ./jsonv name,age > example.csv
-# $ cat conversions.json | ./jsonv Stat.id,Stat.ip,Stat.affiliate_info1,Stat.affiliate_info2,Stat.refer response.data.data
-# $ cat conversions.json | ./jsonv Stat.id,Stat.ip,Stat.affiliate_info1,Stat.affiliate_info2,Stat.refer response.data.data > conversions.csv
+#
+# A Bash command line tool for converting JSON to CSV
+#
+# Create a JSON file
+#
+# Example (e.g. example.json)
+#
+#     [
+#       {
+#         "name": "Dagny Taggart",
+#         "age": 39
+#       }, {
+#         "name": "Francisco D'Anconia",
+#         "age": 40
+#       }, {
+#         "name": "Hank Rearden (a.k.a \"The Tank\")",
+#         "age": 46
+#       }
+#     ]
+#
+# Command line usage
+#
+# Call `jsonv` and pass the paths of the values used for the CSV columns (comma separated).
+# Optionally, you can pass a prefix for the paths as a second argument.
+#
+# Example
+#
+#     $ cat example.json | ./jsonv name,age
+#     "Dagny Taggart",39
+#     "Francisco D'Anconia",40
+#     "Hank Rearden (a.k.a \"The Tank\")",46Host: archan937.com
+#
+#     $ cat example.json | ./jsonv name,age > example.csv
+#     $ cat example.csv
+#     "Dagny Taggart",39
+#     "Francisco D'Anconia",40
+#     "Hank Rearden (a.k.a \"The Tank\")",46Host: archan937.com
+#
 
 jsonsh=${BASH_SOURCE%/*}/json.sh
 log=${BASH_SOURCE%/*}/jsonv.log

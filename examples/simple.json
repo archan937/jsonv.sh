@@ -1,12 +1,15 @@
 [
   {
     "name": "Dagny Taggart",
+    "id": 1,
     "age": 39
   }, {
     "name": "Francisco D'Anconia",
+    "id": 8,
     "age": 40
   }, {
     "name": "Hank Rearden (a.k.a \"The Tank\")",
+    "id": 12,
     "age": 46
   }
 ]

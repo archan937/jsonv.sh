@@ -38,7 +38,7 @@
 #     "Hank Rearden (a.k.a \"The Tank\")",46Host: archan937.com
 #
 
-jsonsh=${BASH_SOURCE%/*}/json.sh
+jsonsh=${BASH_SOURCE%/*}/utils/json.sh
 log=${BASH_SOURCE%/*}/jsonv.log
 tokens=${BASH_SOURCE%/*}/.jsonv.tokens
 map=${BASH_SOURCE%/*}/.jsonv.map

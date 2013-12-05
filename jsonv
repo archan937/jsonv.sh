@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+# Example:
+# $ cat example.json | ./jsonv name,age
+# $ cat example.json | ./jsonv name,age > example.csv
+# $ cat conversions.json | ./jsonv Stat.id,Stat.ip,Stat.affiliate_info1,Stat.affiliate_info2,Stat.refer response.data.data
+# $ cat conversions.json | ./jsonv Stat.id,Stat.ip,Stat.affiliate_info1,Stat.affiliate_info2,Stat.refer response.data.data > conversions.csv
+
+jsonsh=${BASH_SOURCE%/*}/json.sh
+log=${BASH_SOURCE%/*}/jsonv.log
+tokens=${BASH_SOURCE%/*}/.jsonv.tokens
+map=${BASH_SOURCE%/*}/.jsonv.map
+
+get_key () {
+  echo $1 | xargs | awk -F. '{
+    for (i = 1; i <= NF; i++) {
+      if (i > 1) {
+        printf ",";
+      }
+      printf "\""$i"\"";
+    }
+  }'
+}
+
+echo_log () {
+  echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1" >> $log
+}
+
+jsonv () {
+  echo_log "Writing tokens file"
+  eval "cat /dev/stdin | $jsonsh -b > $tokens"
+
+  echo_log "Deriving keys"
+  keys=()
+  for path in ${1//,/ }; do
+    keys+=($(get_key $path))
+  done
+
+  echo_log "Deriving prefix"
+  prefix=''
+  if [ "$2" != "" ]; then
+    prefix=$(get_key $2)","
+    escaped_prefix=$(echo $prefix | sed 's/\"/\\"/g')
+  fi
+
+  echo_log "Counting entries"
+  count=$(IFS=$'\n'; cat $tokens | sed 's/^[\["a-z,]*//g' | sed 's/,.*//g' | awk '/^[0-9]+$/ && !_[$0]++' | awk -F\t 'BEGIN{max==""} ($1 > max) {max=$1} END{print max}')
+
+  echo_log "Writing map file"
+  eval "> $map"
+  for ((i=0; i<=$count; i++)); do
+    for key in "${keys[@]}"; do
+      printf "[$prefix$i,"$key"]\t" >> $map
+    done
+    echo >> $map
+  done
+
+  echo_log "Deriving line format"
+  format=''
+  for ((i=1; i<=${#keys[@]}; i++)); do
+    if [ $i -gt 1 ]; then
+      format+="\",\""
+    fi
+    format+="a[\$"$i"]"
+  done
+
+  echo_log "Compiling CSV output"
+  program="'FNR==NR{a[\$1]=\$2; next} {print $format}'"
+  eval "awk -F\\\t $program $tokens $map"
+
+  echo_log "Removing tokens and map file"
+  eval "rm $tokens; rm $map"
+
+  echo_log "Done."
+  echo "=====================" >> $log
+}
+
+if [ "$1" != "" ]; then
+  jsonv $1 $2
+fi

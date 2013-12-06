@@ -92,13 +92,11 @@ jsonv () {
   count=$(cat $tokens | sed 's/^[\["a-z,]*//g' | sed 's/,.*//g' | awk '/^[0-9]+$/ && !_[$0]++' | awk -F\t 'BEGIN{max==""} ($1 > max) {max=$1} END{print max}')
 
   echo_log "Writing map file"
-  eval "> $map"
-  for ((i=0; i<=$count; i++)); do
-    for key in "${keys[@]}"; do
-      printf "[$prefix$i,"$key"]\t" >> $map
-    done
-    echo >> $map
+  row=''
+  for key in "${keys[@]}"; do
+    row="$row[$escaped_prefix"INDEX",$key]\t"
   done
+  echo -e $row | awk -F\t -v n="$count" '{for(i=0;i<=n;i++) print}' | awk -F\t '{gsub("INDEX",NR-1,$0); print $0}' > $map
 
   echo_log "Deriving line format"
   format=''

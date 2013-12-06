@@ -1,0 +1,5 @@
+= jsonv.sh CHANGELOG
+
+== Version 0.1.0 (December 6, 2013)
+
+* Initial release

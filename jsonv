@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# jsonv v0.1.0
+# jsonv 0.1.0
 # A Bash command line tool for converting JSON to CSV
 #
 # Copyright (c) 2013 Paul Engel, released under the MIT license

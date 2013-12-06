@@ -21,7 +21,7 @@ Optionally, you can pass a prefix for the paths as a second argument.
 
 Parsing `examples/simple.json` (3 objects) without a path prefix:
 
-    $ curl -s https://raw.github.com/archan937/jsonv.sh/master/examples/simple.json | ./jsonv id,name,age > simple.csv
+    $ curl -s https://raw.github.com/archan937/jsonv.sh/master/examples/simple.json | jsonv id,name,age > simple.csv
     $ cat simple.csv
     1,"Dagny Taggart",39
     8,"Francisco D'Anconia",40
@@ -31,7 +31,7 @@ Parsing `examples/simple.json` (3 objects) without a path prefix:
 
 Parsing `examples/complex.json` (1031 objects) with a path prefix:
 
-    $ curl -s https://raw.github.com/archan937/jsonv.sh/master/examples/complex.json | ./jsonv id,name,gender,balance,age,company,address,phone,email,picture,registered response.data > complex.csv
+    $ curl -s https://raw.github.com/archan937/jsonv.sh/master/examples/complex.json | jsonv id,name,gender,balance,age,company,address,phone,email,picture,registered response.data > complex.csv
     $ head -n 5 complex.csv
     1,"Nieves Miller","male","$2,366.00",29,"Affluex","101 Gates Avenue, Clay, Vermont, 9389","+1 (845) 526-2694","nievesmiller@affluex.com","http://placehold.it/32x32","2005-09-09T04:57:43 -02:00"
     2,"Hopper Peters","male","$1,608.00",26,"Geekmosis","879 Borinquen Pl, Guilford, New Jersey, 4785","+1 (823) 480-2875","hopperpeters@geekmosis.com","http://placehold.it/32x32","2009-03-24T18:38:03 -01:00"

@@ -42,10 +42,19 @@
 #     "Hank Rearden (a.k.a \"The Tank\")",46
 #
 
-jsonsh=${BASH_SOURCE%/*}/utils/json.sh
-log=${BASH_SOURCE%/*}/jsonv.log
-tokens=${BASH_SOURCE%/*}/.jsonv.tokens
-map=${BASH_SOURCE%/*}/.jsonv.map
+dir=$(cd `dirname $0` && pwd)
+
+if [[ $dir =~ /\/bin$/ ]]; then
+  sh=$dir/.jsonv/json.sh
+  log=$dir/.jsonv/log
+  tokens=$dir/.jsonv/tokens
+  map=$dir/.jsonv/map
+else
+  sh=$dir/utils/json.sh
+  log=$dir/tmp/log
+  tokens=$dir/tmp/tokens
+  map=$dir/tmp/map
+fi
 
 get_key () {
   echo $1 | xargs | awk -F. '{

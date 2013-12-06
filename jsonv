@@ -113,9 +113,6 @@ jsonv () {
   program="'FNR==NR{a[\$1]=\$2; next} {print $format}'"
   eval "awk -F\\\t $program $tokens $map"
 
-  echo_log "Removing tokens and map file"
-  eval "rm $tokens; rm $map"
-
   echo_log "Done."
   echo "=====================" >> $log
 }

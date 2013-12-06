@@ -2,6 +2,16 @@
 
 A Bash command line tool for converting JSON to CSV
 
+## Installation
+
+Run the following command to install `jsonv`:
+
+    $ curl -s https://raw.github.com/archan937/jsonv.sh/master/install.sh | bash
+
+To uninstall, run this command:
+
+    $ curl -s https://raw.github.com/archan937/jsonv.sh/master/uninstall.sh | bash
+
 ## Usage
 
 Call `jsonv` and pass the paths of the values used for the CSV columns (comma separated).
@@ -28,6 +38,22 @@ Parsing `examples/complex.json` (1031 objects) with a path prefix:
     3,"Robbie Lindsey","female","$1,944.00",30,"Suremax","876 Ditmas Avenue, Kent, Florida, 6112","+1 (957) 462-2668","robbielindsey@suremax.com","http://placehold.it/32x32","2000-08-18T16:45:03 -02:00"
     4,"Brennan Gonzales","male","$3,897.00",23,"Terascape","947 Hall Street, Carlos, Washington, 3321","+1 (963) 525-3342","brennangonzales@terascape.com","http://placehold.it/32x32","2007-08-28T22:45:09 -02:00"
     5,"Trisha Cotton","female","$2,591.00",35,"Dogtown","252 Anchorage Place, Hatteras, Texas, 2766","+1 (849) 597-3794","trishacotton@dogtown.com","http://placehold.it/32x32","2007-08-22T18:10:07 -02:00"
+
+### Log file
+
+When using `jsonv`, it writes log messages to log file `jsonv.log` located within the same directory as `jsonv` itself.
+
+    =====================
+    [2013-12-06 01:10:23] Writing tokens file
+    [2013-12-06 01:10:34] Deriving keys
+    [2013-12-06 01:10:34] Deriving prefix
+    [2013-12-06 01:10:34] Counting entries
+    [2013-12-06 01:10:34] Writing map file
+    [2013-12-06 01:10:36] Deriving line format
+    [2013-12-06 01:10:36] Compiling CSV output
+    [2013-12-06 01:10:36] Removing tokens and map file
+    [2013-12-06 01:10:36] Done.
+    =====================
 
 ## Credits
 

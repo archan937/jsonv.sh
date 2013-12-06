@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 #
+# jsonv v0.1.0
 # A Bash command line tool for converting JSON to CSV
 #
-# Create a JSON file
+# Copyright (c) 2013 Paul Engel, released under the MIT license
+# https://github.com/archan937/jsonv.sh
+#
+# Get a JSON file
 #
 # Example (e.g. example.json)
 #
@@ -29,13 +33,13 @@
 #     $ cat example.json | ./jsonv name,age
 #     "Dagny Taggart",39
 #     "Francisco D'Anconia",40
-#     "Hank Rearden (a.k.a \"The Tank\")",46Host: archan937.com
+#     "Hank Rearden (a.k.a \"The Tank\")",46
 #
 #     $ cat example.json | ./jsonv name,age > example.csv
 #     $ cat example.csv
 #     "Dagny Taggart",39
 #     "Francisco D'Anconia",40
-#     "Hank Rearden (a.k.a \"The Tank\")",46Host: archan937.com
+#     "Hank Rearden (a.k.a \"The Tank\")",46
 #
 
 jsonsh=${BASH_SOURCE%/*}/utils/json.sh

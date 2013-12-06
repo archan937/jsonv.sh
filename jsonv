@@ -30,12 +30,12 @@
 #
 # Example
 #
-#     $ cat example.json | ./jsonv name,age
+#     $ cat example.json | jsonv name,age
 #     "Dagny Taggart",39
 #     "Francisco D'Anconia",40
 #     "Hank Rearden (a.k.a \"The Tank\")",46
 #
-#     $ cat example.json | ./jsonv name,age > example.csv
+#     $ cat example.json | jsonv name,age > example.csv
 #     $ cat example.csv
 #     "Dagny Taggart",39
 #     "Francisco D'Anconia",40
@@ -64,7 +64,7 @@ echo_log () {
 
 jsonv () {
   echo_log "Writing tokens file"
-  eval "cat /dev/stdin | $jsonsh -b > $tokens"
+  cat /dev/stdin | $sh -b > $tokens
 
   echo_log "Deriving keys"
   keys=()
@@ -80,7 +80,7 @@ jsonv () {
   fi
 
   echo_log "Counting entries"
-  count=$(IFS=$'\n'; cat $tokens | sed 's/^[\["a-z,]*//g' | sed 's/,.*//g' | awk '/^[0-9]+$/ && !_[$0]++' | awk -F\t 'BEGIN{max==""} ($1 > max) {max=$1} END{print max}')
+  count=$(cat $tokens | sed 's/^[\["a-z,]*//g' | sed 's/,.*//g' | awk '/^[0-9]+$/ && !_[$0]++' | awk -F\t 'BEGIN{max==""} ($1 > max) {max=$1} END{print max}')
 
   echo_log "Writing map file"
   eval "> $map"
@@ -95,7 +95,7 @@ jsonv () {
   format=''
   for ((i=1; i<=${#keys[@]}; i++)); do
     if [ $i -gt 1 ]; then
-      format+="\",\""
+      format+='","'
     fi
     format+="a[\$"$i"]"
   done

@@ -13,12 +13,15 @@
 #     [
 #       {
 #         "name": "Dagny Taggart",
+#         "id": 1,
 #         "age": 39
 #       }, {
 #         "name": "Francisco D'Anconia",
+#         "id": 8,
 #         "age": 40
 #       }, {
 #         "name": "Hank Rearden (a.k.a \"The Tank\")",
+#         "id": 12,
 #         "age": 46
 #       }
 #     ]
@@ -30,34 +33,36 @@
 #
 # Example
 #
-#     $ cat example.json | jsonv name,age
-#     "Dagny Taggart",39
-#     "Francisco D'Anconia",40
-#     "Hank Rearden (a.k.a \"The Tank\")",46
+#     $ cat examples/simple.json | ./jsonv id,name,age
+#     1,"Dagny Taggart",39
+#     8,"Francisco D'Anconia",40
+#     12,"Hank Rearden (a.k.a \"The Tank\")",46
 #
-#     $ cat example.json | jsonv name,age > example.csv
+#     $ cat examples/simple.json | ./jsonv id,name,age > example.csv
 #     $ cat example.csv
-#     "Dagny Taggart",39
-#     "Francisco D'Anconia",40
-#     "Hank Rearden (a.k.a \"The Tank\")",46
+#     1,"Dagny Taggart",39
+#     8,"Francisco D'Anconia",40
+#     12,"Hank Rearden (a.k.a \"The Tank\")",46
 #
 
 dir=$(cd `dirname $0` && pwd)
 
 if [[ $dir =~ /\/bin$/ ]]; then
-  sh=$dir/.jsonv/json.sh
+  awk=$dir/.jsonv/json.awk
   log=$dir/.jsonv/log
+  json=$dir/.jsonv/json
   tokens=$dir/.jsonv/tokens
   map=$dir/.jsonv/map
 else
-  sh=$dir/utils/json.sh
+  awk=$dir/utils/json.awk
   log=$dir/tmp/log
+  json=$dir/tmp/json
   tokens=$dir/tmp/tokens
   map=$dir/tmp/map
 fi
 
 get_key () {
-  echo $1 | xargs | awk -F. '{
+  echo $1 | xargs | gawk -F. '{
     for (i = 1; i <= NF; i++) {
       if (i > 1) {
         printf ",";
@@ -72,8 +77,11 @@ echo_log () {
 }
 
 jsonv () {
+  echo_log "Writing JSON file"
+  cat /dev/stdin > $json
+
   echo_log "Writing tokens file"
-  cat /dev/stdin | $sh -b > $tokens
+  echo -e "$json\n" | gawk -f $awk > $tokens
 
   echo_log "Deriving keys"
   keys=()
@@ -85,18 +93,17 @@ jsonv () {
   prefix=''
   if [ "$2" != "" ]; then
     prefix=$(get_key $2)","
-    escaped_prefix=$(echo $prefix | sed 's/\"/\\"/g')
   fi
 
   echo_log "Counting entries"
-  count=$(cat $tokens | sed 's/^[\["a-z,]*//g' | sed 's/,.*//g' | awk '/^[0-9]+$/ && !_[$0]++' | awk -F\t 'BEGIN{max==""} ($1 > max) {max=$1} END{print max}')
+  count=$(cat $tokens | sed 's/^[\["a-z,]*//g' | sed 's/,.*//g' | gawk '/^[0-9]+$/ && !_[$0]++' | gawk -F\t 'BEGIN{max==""} ($1 > max) {max=$1} END{print max}')
 
   echo_log "Writing map file"
   row=''
   for key in "${keys[@]}"; do
-    row="$row[$escaped_prefix"INDEX",$key]\t"
+    row="$row[$prefix"INDEX",$key]\t"
   done
-  echo -e $row | awk -F\t -v n="$count" '{for(i=0;i<=n;i++) print}' | awk -F\t '{gsub("INDEX",NR-1,$0); print $0}' > $map
+  echo -e $row | gawk -F\t -v n="$count" '{for(i=0;i<=n;i++) print}' | gawk -F\t '{gsub("INDEX",NR-1,$0); print $0}' > $map
 
   echo_log "Deriving line format"
   format=''
@@ -109,7 +116,7 @@ jsonv () {
 
   echo_log "Compiling CSV output"
   program="'FNR==NR{a[\$1]=\$2; next} {print $format}'"
-  eval "awk -F\\\t $program $tokens $map"
+  eval "gawk -F\\\t $program $tokens $map"
 
   echo_log "Done."
   echo "=====================" >> $log

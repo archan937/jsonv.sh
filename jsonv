@@ -47,7 +47,7 @@
 
 dir=$(cd `dirname $0` && pwd)
 
-if [[ $dir =~ /\/bin$/ ]]; then
+if [[ $dir =~ \/bin$ ]]; then
   awk=$dir/.jsonv/json.awk
   log=$dir/.jsonv/log
   json=$dir/.jsonv/json

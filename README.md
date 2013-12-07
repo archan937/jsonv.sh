@@ -12,6 +12,8 @@ To uninstall, run this command:
 
     $ curl -s https://raw.github.com/archan937/jsonv.sh/master/uninstall.sh | bash
 
+**Note: You also need to install `gawk`.**
+
 ## Usage
 
 Call `jsonv` and pass the paths of the values used for the CSV columns (comma separated).
@@ -28,7 +30,17 @@ Parsing `examples/simple.json` (3 objects) without a path prefix:
 
 ### Complex JSON
 
-Parsing `examples/complex-2.json` (4734 objects) with a path prefix:
+Parsing `examples/complex-1.json` (1008 objects, file size 764KB) with a path prefix:
+
+    $ curl -s https://raw.github.com/archan937/jsonv.sh/master/examples/complex-1.json | jsonv person.id,person.name,person.gender,person.balance,person.age,person.company response.data
+    1,"Anastasia Goodwin","female","$2,623.00",20,"Equitax"
+    2,"Peters Watson","male","$1,606.00",29,"Blurrybus"
+    3,"Shirley Gates","female","$3,735.00",25,"Omatom"
+    4,"Mcgowan Terry","male","$3,121.00",25,"Austech"
+    5,"Melody Cote","female","$1,519.00",25,"Matrixity"
+    ...
+
+Parsing `examples/complex-2.json` (4734 objects, file size 3.2MB) with a path prefix:
 
     $ curl -s https://raw.github.com/archan937/jsonv.sh/master/examples/complex-2.json | jsonv id,name,gender,balance,age,company,address,phone,email,picture,registered response.data
     1,"Newton Bush","male","$1,653.00",27,"Xanide","710 Corbin Place, Vivian, Mississippi, 6954","+1 (916) 520-2940","newtonbush@xanide.com","http://placehold.it/32x32","1998-02-17T17:00:12 -01:00"
@@ -50,22 +62,22 @@ Check out this repository first and run the following command:
     5,"Hutchinson Ayers","male","$1,697.00",20,"Mangelica","129 Tabor Court, Freeburn, North Dakota, 2921","+1 (823) 542-2366","hutchinsonayers@mangelica.com","http://placehold.it/32x32","1997-11-20T04:39:49 -01:00"
     ...
 
-In this example, `examples/complex-3.json` contains 19828 objects and is parsed in about 20 seconds.
+In this example, `examples/complex-3.json` contains **19828 objects** (file size **13.6MB**) and is parsed in about **20 seconds**.
 
 ### Log file
 
 When using `jsonv`, it writes log messages to log file `jsonv.log` located within the same directory as `jsonv` itself.
 
     =====================
-    [2013-12-06 01:10:23] Writing tokens file
-    [2013-12-06 01:10:34] Deriving keys
-    [2013-12-06 01:10:34] Deriving prefix
-    [2013-12-06 01:10:34] Counting entries
-    [2013-12-06 01:10:34] Writing map file
-    [2013-12-06 01:10:36] Deriving line format
-    [2013-12-06 01:10:36] Compiling CSV output
-    [2013-12-06 01:10:36] Removing tokens and map file
-    [2013-12-06 01:10:36] Done.
+    [2013-12-07 04:10:29] Writing JSON file
+    [2013-12-07 04:10:31] Writing tokens file
+    [2013-12-07 04:10:32] Deriving keys
+    [2013-12-07 04:10:32] Deriving prefix
+    [2013-12-07 04:10:32] Counting entries
+    [2013-12-07 04:10:32] Writing map file
+    [2013-12-07 04:10:32] Deriving line format
+    [2013-12-07 04:10:32] Compiling CSV output
+    [2013-12-07 04:10:32] Done.
     =====================
 
 ## Credits
@@ -80,7 +92,7 @@ Thanks Dominic Tarr ([@dominictarr](https://twitter.com/dominictarr)) for creati
 
 Thanks GNU Project ([http://www.gnu.org](http://www.gnu.org)) for creating `gawk`:
 
-[http://www.gnu.org/software/gawk/](http://www.gnu.org/software/gawk/)
+[http://www.gnu.org/software/gawk](http://www.gnu.org/software/gawk)
 
 ## License
 

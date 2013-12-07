@@ -1,4 +1,4 @@
-version="0.1.0"
+version="0.2.0"
 
 echo "Downloading https://github.com/archan937/jsonv.sh/archive/$version.tar.gz"
 curl -L -s https://github.com/archan937/jsonv.sh/archive/$version.tar.gz -o jsonv.sh-$version.tar.gz

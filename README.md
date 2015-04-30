@@ -1,4 +1,4 @@
-# Jsonv.sh
+# jsonv.sh
 
 A Bash command line tool for converting JSON to CSV
 
@@ -6,11 +6,11 @@ A Bash command line tool for converting JSON to CSV
 
 Run the following command to install `jsonv`:
 
-    $ curl -s https://raw.github.com/archan937/jsonv.sh/master/install.sh | bash
+    $ curl -Ls https://raw.github.com/archan937/jsonv.sh/master/install.sh | bash
 
 To uninstall, run this command:
 
-    $ curl -s https://raw.github.com/archan937/jsonv.sh/master/uninstall.sh | bash
+    $ curl -Ls https://raw.github.com/archan937/jsonv.sh/master/uninstall.sh | bash
 
 **Note: You also need to install `gawk`.**
 
@@ -23,7 +23,7 @@ Optionally, you can pass a prefix for the paths as a second argument.
 
 Parsing `examples/simple.json` (3 objects) without a path prefix:
 
-    $ curl -s https://raw.github.com/archan937/jsonv.sh/master/examples/simple.json | jsonv id,name,age
+    $ curl -Ls https://raw.github.com/archan937/jsonv.sh/master/examples/simple.json | jsonv id,name,age
     1,"Dagny Taggart",39
     8,"Francisco D'Anconia",40
     12,"Hank Rearden (a.k.a \"The Tank\")",46
@@ -32,7 +32,7 @@ Parsing `examples/simple.json` (3 objects) without a path prefix:
 
 Parsing `examples/complex-1.json` (1008 objects, file size 764KB) with a path prefix:
 
-    $ curl -s https://raw.github.com/archan937/jsonv.sh/master/examples/complex-1.json | jsonv person.id,person.name,person.gender,person.balance,person.age,person.company response.data
+    $ curl -Ls https://raw.github.com/archan937/jsonv.sh/master/examples/complex-1.json | jsonv person.id,person.name,person.gender,person.balance,person.age,person.company response.data
     1,"Anastasia Goodwin","female","$2,623.00",20,"Equitax"
     2,"Peters Watson","male","$1,606.00",29,"Blurrybus"
     3,"Shirley Gates","female","$3,735.00",25,"Omatom"
@@ -42,7 +42,7 @@ Parsing `examples/complex-1.json` (1008 objects, file size 764KB) with a path pr
 
 Parsing `examples/complex-2.json` (4734 objects, file size 3.2MB) with a path prefix:
 
-    $ curl -s https://raw.github.com/archan937/jsonv.sh/master/examples/complex-2.json | jsonv id,name,gender,balance,age,company,address,phone,email,picture,registered response.data
+    $ curl -Ls https://raw.github.com/archan937/jsonv.sh/master/examples/complex-2.json | jsonv id,name,gender,balance,age,company,address,phone,email,picture,registered response.data
     1,"Newton Bush","male","$1,653.00",27,"Xanide","710 Corbin Place, Vivian, Mississippi, 6954","+1 (916) 520-2940","newtonbush@xanide.com","http://placehold.it/32x32","1998-02-17T17:00:12 -01:00"
     2,"Ratliff Workman","male","$2,941.00",39,"Bitendrex","680 Menahan Street, Matheny, North Dakota, 3316","+1 (997) 409-2099","ratliffworkman@bitendrex.com","http://placehold.it/32x32","1996-02-02T13:26:48 -01:00"
     3,"Hawkins Jacobs","male","$1,584.00",40,"Marqet","349 Joralemon Street, Mansfield, California, 8655","+1 (831) 508-2216","hawkinsjacobs@marqet.com","http://placehold.it/32x32","2012-07-23T15:13:43 -02:00"
